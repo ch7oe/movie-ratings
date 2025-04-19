@@ -42,6 +42,27 @@ def all_users():
 
     return render_template("all_users.html", users=users)
 
+@app.route("/users", methods=["POST"])
+def register_user():
+    """Create a new user."""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    user = crud.get_user_by_email(email)
+    if user:
+        flash("Cannot create an account with that email. Try again.")
+    else:
+        user = crud.create_user(email, password)
+        db.session.add(user)
+        db.session.commit()
+        flash("Account created! Please log in.")
+
+    return redirect("/")
+
+    
+
+
 @app.route("/users/<user_id>")
 def show_user(user_id):
    """Show Details about particular user"""
@@ -49,6 +70,8 @@ def show_user(user_id):
    users = crud.get_user_by_id(user_id)
 
    return render_template("user_details.html", users=users)
+
+
 
 # Replace this with routes and view functions!
 
