@@ -10,12 +10,33 @@ def create_user(email, password):
 
     return user
 
+def get_users():
+    """Get ALL Users"""
+
+    return User.query.all()
+
+
 def create_movie(title, overview, release_date, poster_path):
     """Create and return a new movie"""
 
     movie = Movie(title=title, overview=overview, release_date=release_date, poster_path=poster_path)
 
     return movie
+
+def get_movies():
+    """Get All Movies"""
+
+    return Movie.query.all()
+
+def get_movie_by_id(movie_id):
+
+    return Movie.query.get(movie_id)
+    
+def get_user_by_id(user_id):
+
+    return User.query.get(user_id)
+
+
 
 
 def create_rating(user, movie, score):
